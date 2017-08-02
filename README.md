@@ -10,11 +10,12 @@ Note: This plugin doesn't work for IOS or Windows Phone, feel free to create a p
 
 ## How to install
 
-    cordova plugin add https://github.com/coconauts/NotificationListener-cordova
+    cordova plugin add https://github.com/martinciscap/notification-listener
 
 ## Enable notification listener service
 
 This service requires an special permission that must be enabled from settings on Android (Settings > Notifications > Notification access)
+For Android 7 and newer: Settings > Apps > click cogwheel > Special Access > Notification access
 
 ![](/settings.jpg)
 
@@ -45,6 +46,15 @@ var app = {
        }, function(e){
          console.log("Notification Error " + e);
        });
+
+       document.getElementById("btn").addEventListener("click", function() {
+         notificationListener.isEnabled(function(msg) {
+           alert("success -> " + msg);
+         }, function(msg) {
+           alert("error -> " + msg);
+         });
+       });
+    });
     }
 };
 app.initialize();
@@ -70,5 +80,5 @@ The notification response received by Javascript is a simplified object from the
 in Android.
 
 Feel free to update the
- [notification parser](https://github.com/coconauts/NotificationListener-cordova/blob/master/src/android/NotificationCommands.java#L80) 
+ [notification parser](https://github.com/coconauts/NotificationListener-cordova/blob/master/src/android/NotificationCommands.java#L80)
  inside this plugin if needed.

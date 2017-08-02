@@ -16,6 +16,8 @@ public class NotificationCommands extends CordovaPlugin {
     private static final String TAG = "NotificationCommands";
 
     private static final String LISTEN = "listen";
+    private static final String IS_ENABLED = "isEnabled";
+    private static boolean ENABLED = false;
 
     // note that webView.isPaused() is not Xwalk compatible, so tracking it poor-man style
     private boolean isPaused;
@@ -29,6 +31,13 @@ public class NotificationCommands extends CordovaPlugin {
 
       if (LISTEN.equals(action)) {
         setListener(callbackContext);
+        return true;
+    } else if (IS_ENABLED.equals(action)) {
+        if (ENABLED == true) {
+            callbackContext.success("ENABLED");
+        } else {
+            callbackContext.error("DISABLED");
+        }
         return true;
       } else {
         callbackContext.error(TAG+". " + action + " is not a supported function.");
@@ -44,6 +53,10 @@ public class NotificationCommands extends CordovaPlugin {
     @Override
     public void onResume(boolean multitasking) {
       this.isPaused = false;
+    }
+
+    public static void listenerConnected(Boolean b){
+        ENABLED = b;
     }
 
     public void setListener(CallbackContext callbackContext) {

@@ -54,6 +54,14 @@ public class NotificationService extends NotificationListenerService {
             addNotification(sbn);
         }
     }
+    @Override
+    public void onListenerConnected() {
+        NotificationCommands.listenerConnected(true);
+    }
+    @Override
+    public void onListenerDisconnected() {
+        NotificationCommands.listenerConnected(false);
+    }
     private boolean ignorePkg(String pk){
         for(String s: IGNORE_PKG.split(",")) if (pk.contains(s)) return true;
         return false;
